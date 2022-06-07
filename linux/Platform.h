@@ -34,9 +34,8 @@ in the source distribution for its full text.
 
 /* GNU/Hurd does not have PATH_MAX in limits.h */
 #ifndef PATH_MAX
-   #define PATH_MAX 4096
+#define PATH_MAX 4096
 #endif
-
 
 extern const ScreenDefaults Platform_defaultScreens[];
 
@@ -46,90 +45,98 @@ extern const SignalItem Platform_signals[];
 
 extern const unsigned int Platform_numberOfSignals;
 
-extern const MeterClass* const Platform_meterTypes[];
+extern const MeterClass *const Platform_meterTypes[];
 
 bool Platform_init(void);
 void Platform_done(void);
 
 extern bool Running_containerized;
 
-void Platform_setBindings(Htop_Action* keys);
+void Platform_setBindings(Htop_Action *keys);
 
 int Platform_getUptime(void);
 
-void Platform_getLoadAverage(double* one, double* five, double* fifteen);
+float Platform_getTemp(void);
+
+float Platform_getFreq(void);
+
+void Platform_getLoadAverage(double *one, double *five, double *fifteen);
 
 int Platform_getMaxPid(void);
 
-double Platform_setCPUValues(Meter* this, unsigned int cpu);
+double Platform_setCPUValues(Meter *this, unsigned int cpu);
 
-void Platform_setMemoryValues(Meter* this);
+void Platform_setMemoryValues(Meter *this);
 
-void Platform_setSwapValues(Meter* this);
+void Platform_setSwapValues(Meter *this);
 
-void Platform_setZramValues(Meter* this);
+void Platform_setZramValues(Meter *this);
 
-void Platform_setZfsArcValues(Meter* this);
+void Platform_setZfsArcValues(Meter *this);
 
-void Platform_setZfsCompressedArcValues(Meter* this);
+void Platform_setZfsCompressedArcValues(Meter *this);
 
-char* Platform_getProcessEnv(pid_t pid);
+char *Platform_getProcessEnv(pid_t pid);
 
-char* Platform_getInodeFilename(pid_t pid, ino_t inode);
+char *Platform_getInodeFilename(pid_t pid, ino_t inode);
 
-FileLocks_ProcessData* Platform_getProcessLocks(pid_t pid);
+FileLocks_ProcessData *Platform_getProcessLocks(pid_t pid);
 
-void Platform_getPressureStall(const char* file, bool some, double* ten, double* sixty, double* threehundred);
+void Platform_getPressureStall(const char *file, bool some, double *ten, double *sixty, double *threehundred);
 
-bool Platform_getDiskIO(DiskIOData* data);
+bool Platform_getDiskIO(DiskIOData *data);
 
-bool Platform_getNetworkIO(NetworkIOData* data);
+bool Platform_getNetworkIO(NetworkIOData *data);
 
-void Platform_getBattery(double* percent, ACPresence* isOnAC);
+void Platform_getBattery(double *percent, ACPresence *isOnAC);
 
-static inline void Platform_getHostname(char* buffer, size_t size) {
+static inline void Platform_getHostname(char *buffer, size_t size)
+{
    Generic_hostname(buffer, size);
 }
 
-static inline void Platform_getRelease(char** string) {
+static inline void Platform_getRelease(char **string)
+{
    *string = Generic_uname();
 }
 
 #ifdef HAVE_LIBCAP
-   #define PLATFORM_LONG_OPTIONS \
-      {"drop-capabilities", optional_argument, 0, 160},
+#define PLATFORM_LONG_OPTIONS \
+   {"drop-capabilities", optional_argument, 0, 160},
 #else
-   #define PLATFORM_LONG_OPTIONS
+#define PLATFORM_LONG_OPTIONS
 #endif
 
-void Platform_longOptionsUsage(const char* name);
+void Platform_longOptionsUsage(const char *name);
 
-CommandLineStatus Platform_getLongOption(int opt, int argc, char** argv);
+CommandLineStatus Platform_getLongOption(int opt, int argc, char **argv);
 
-static inline void Platform_gettime_realtime(struct timeval* tv, uint64_t* msec) {
+static inline void Platform_gettime_realtime(struct timeval *tv, uint64_t *msec)
+{
    Generic_gettime_realtime(tv, msec);
 }
 
-static inline void Platform_gettime_monotonic(uint64_t* msec) {
+static inline void Platform_gettime_monotonic(uint64_t *msec)
+{
    Generic_gettime_monotonic(msec);
 }
 
-static inline Hashtable* Platform_dynamicMeters(void) { return NULL; }
+static inline Hashtable *Platform_dynamicMeters(void) { return NULL; }
 
-static inline void Platform_dynamicMetersDone(ATTR_UNUSED Hashtable* table) { }
+static inline void Platform_dynamicMetersDone(ATTR_UNUSED Hashtable *table) {}
 
-static inline void Platform_dynamicMeterInit(ATTR_UNUSED Meter* meter) { }
+static inline void Platform_dynamicMeterInit(ATTR_UNUSED Meter *meter) {}
 
-static inline void Platform_dynamicMeterUpdateValues(ATTR_UNUSED Meter* meter) { }
+static inline void Platform_dynamicMeterUpdateValues(ATTR_UNUSED Meter *meter) {}
 
-static inline void Platform_dynamicMeterDisplay(ATTR_UNUSED const Meter* meter, ATTR_UNUSED RichString* out) { }
+static inline void Platform_dynamicMeterDisplay(ATTR_UNUSED const Meter *meter, ATTR_UNUSED RichString *out) {}
 
-static inline Hashtable* Platform_dynamicColumns(void) { return NULL; }
+static inline Hashtable *Platform_dynamicColumns(void) { return NULL; }
 
-static inline void Platform_dynamicColumnsDone(ATTR_UNUSED Hashtable* table) { }
+static inline void Platform_dynamicColumnsDone(ATTR_UNUSED Hashtable *table) {}
 
-static inline const char* Platform_dynamicColumnInit(ATTR_UNUSED unsigned int key) { return NULL; }
+static inline const char *Platform_dynamicColumnInit(ATTR_UNUSED unsigned int key) { return NULL; }
 
-static inline bool Platform_dynamicColumnWriteField(ATTR_UNUSED const Process* proc, ATTR_UNUSED RichString* str, ATTR_UNUSED unsigned int key) { return false; }
+static inline bool Platform_dynamicColumnWriteField(ATTR_UNUSED const Process *proc, ATTR_UNUSED RichString *str, ATTR_UNUSED unsigned int key) { return false; }
 
 #endif

@@ -15,8 +15,8 @@ in the source distribution for its full text.
 #include "ProvideCurses.h"
 #include "Settings.h"
 
-
-typedef enum TreeStr_ {
+typedef enum TreeStr_
+{
    TREE_STR_VERT,
    TREE_STR_RTEE,
    TREE_STR_BEND,
@@ -28,7 +28,8 @@ typedef enum TreeStr_ {
    LAST_TREE_STR
 } TreeStr;
 
-typedef enum ColorScheme_ {
+typedef enum ColorScheme_
+{
    COLORSCHEME_DEFAULT,
    COLORSCHEME_MONOCHROME,
    COLORSCHEME_BLACKONWHITE,
@@ -39,7 +40,8 @@ typedef enum ColorScheme_ {
    LAST_COLORSCHEME
 } ColorScheme;
 
-typedef enum ColorElements_ {
+typedef enum ColorElements_
+{
    RESET_COLOR,
    DEFAULT_COLOR,
    FUNCTION_BAR,
@@ -64,6 +66,8 @@ typedef enum ColorElements_ {
    METER_VALUE_WARN,
    LED_COLOR,
    UPTIME,
+   TEMP,
+   FREQ,
    BATTERY,
    TASKS_RUNNING,
    SWAP,
@@ -148,24 +152,24 @@ typedef enum ColorElements_ {
    LAST_COLORELEMENT
 } ColorElements;
 
-void CRT_fatalError(const char* note) ATTR_NORETURN;
+void CRT_fatalError(const char *note) ATTR_NORETURN;
 
 #ifdef NDEBUG
-# define CRT_debug(...)
+#define CRT_debug(...)
 #else
-void CRT_debug_impl(const char* file, size_t lineno, const char* func, const char* fmt, ...) ATTR_FORMAT(printf, 4, 5);
-# define CRT_debug(...) CRT_debug_impl(__FILE__, __LINE__, __func__, __VA_ARGS__)
+void CRT_debug_impl(const char *file, size_t lineno, const char *func, const char *fmt, ...) ATTR_FORMAT(printf, 4, 5);
+#define CRT_debug(...) CRT_debug_impl(__FILE__, __LINE__, __func__, __VA_ARGS__)
 #endif
 
 void CRT_handleSIGSEGV(int signal) ATTR_NORETURN;
 
-#define KEY_WHEELUP   KEY_F(30)
+#define KEY_WHEELUP KEY_F(30)
 #define KEY_WHEELDOWN KEY_F(31)
-#define KEY_RECLICK   KEY_F(32)
+#define KEY_RECLICK KEY_F(32)
 #define KEY_SHIFT_TAB KEY_F(33)
-#define KEY_ALT(x)    (KEY_F(64 - 26) + ((x) - 'A'))
+#define KEY_ALT(x) (KEY_F(64 - 26) + ((x) - 'A'))
 
-extern const char* CRT_degreeSign;
+extern const char *CRT_degreeSign;
 
 #ifdef HAVE_LIBNCURSESW
 
@@ -173,9 +177,9 @@ extern bool CRT_utf8;
 
 #endif
 
-extern const char* const* CRT_treeStr;
+extern const char *const *CRT_treeStr;
 
-extern const int* CRT_colors;
+extern const int *CRT_colors;
 
 extern int CRT_cursorX;
 
@@ -187,7 +191,7 @@ extern ColorScheme CRT_colorScheme;
 
 void CRT_setMouse(bool enabled);
 
-void CRT_init(const Settings* settings, bool allowUnicode);
+void CRT_init(const Settings *settings, bool allowUnicode);
 
 void CRT_done(void);
 

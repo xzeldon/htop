@@ -10,6 +10,20 @@
 
 ![Screenshot of htop](https://i.imgur.com/dCSsvSv.png)
 
+## **Warning!**
+
+This fork was created for personal use; correct operation is not guaranteed. 
+
+<details>
+  <summary>Tested on</summary>
+
+  - Manjaro ARM Minimal (Raspberry Pi 4)
+  - Debian 11 (Raspberry Pi 4)
+  - Ubuntu Server 22.04 (Raspberry Pi 4)
+  - Arch Linux (x86 PC), used for the screenshot above
+
+</details>
+
 ## Introduction
 
 `htop` is a cross-platform interactive process viewer.

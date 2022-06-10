@@ -25,5 +25,5 @@ const MeterClass FreqMeter_class = {
     .total = 100.0,
     .attributes = FreqMeter_attributes,
     .name = "Freq",
-    .uiName = "Freq",
+    .uiName = "CPU Frequency",
     .caption = "CPU/Frequency: "};

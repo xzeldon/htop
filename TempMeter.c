@@ -25,5 +25,5 @@ const MeterClass TempMeter_class = {
     .total = 100.0,
     .attributes = TempMeter_attributes,
     .name = "Temp",
-    .uiName = "Temp",
+    .uiName = "CPU Temperature",
     .caption = "CPU/Temperature: "};

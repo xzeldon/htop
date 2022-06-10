@@ -12,15 +12,16 @@
 
 ## **Warning!**
 
-This fork was created for personal use; correct operation is not guaranteed. 
+This fork was created for personal use; correct operation is not guaranteed.
 
 <details>
   <summary>Tested on</summary>
 
-  - Manjaro ARM Minimal (Raspberry Pi 4)
-  - Debian 11 (Raspberry Pi 4)
-  - Ubuntu Server 22.04 (Raspberry Pi 4)
-  - Arch Linux (x86 PC), used for the screenshot above
+- Manjaro ARM Minimal (Raspberry Pi 4)
+- Debian 11 (Raspberry Pi 4)
+- Ubuntu Server 22.04 (Raspberry Pi 4)
+- Raspbian 64bit (Raspberry Pi 3B+)
+- Arch Linux (x86 PC), used for the screenshot above
 
 </details>
 
@@ -47,26 +48,26 @@ For more information and details visit [htop.dev](https://htop.dev).
 
 List of build-time dependencies:
 
-* standard GNU autotools-based C toolchain
-  * C99 compliant compiler
-  * `autoconf`
-  * `autotools`
-* `ncurses`
+- standard GNU autotools-based C toolchain
+  - C99 compliant compiler
+  - `autoconf`
+  - `autotools`
+- `ncurses`
 
 **Note about `ncurses`:**
 > `htop` requires `ncurses` 6.0. Be aware the appropriate package is sometimes still called libncurses5 (on Debian/Ubuntu). Also `ncurses` usually comes in two flavours:
 >
->* With Unicode support.
->* Without Unicode support.
+>- With Unicode support.
+>- Without Unicode support.
 >
 > This is also something that is reflected in the package name on Debian/Ubuntu (via the additional 'w' - 'w'ide character support).
 
 List of additional build-time dependencies (based on feature flags):
 
-* `sensors`
-* `hwloc`
-* `libcap` (v2.21 or later)
-* `libnl-3`
+- `sensors`
+- `hwloc`
+- `libcap` (v2.21 or later)
+- `libnl-3`
 
 Install these and other required packages for C development from your package manager.
 
@@ -112,63 +113,63 @@ To install on the local system run `make install`. By default `make install` ins
 
 #### Generic
 
-* `--enable-unicode`:
+- `--enable-unicode`:
     enable Unicode support
-  * dependency: *libncursesw*
-  * default: *yes*
-* `--enable-affinity`:
+  - dependency: *libncursesw*
+  - default: *yes*
+- `--enable-affinity`:
     enable `sched_setaffinity(2)` and `sched_getaffinity(2)` for affinity support; conflicts with hwloc
-  * default: *check*
-* `--enable-hwloc`:
+  - default: *check*
+- `--enable-hwloc`:
     enable hwloc support for CPU affinity; disables affinity support
-  * dependency: *libhwloc*
-  * default: *no*
-* `--enable-static`:
+  - dependency: *libhwloc*
+  - default: *no*
+- `--enable-static`:
     build a static htop binary; hwloc and delay accounting are not supported
-  * default: *no*
-* `--enable-debug`:
+  - default: *no*
+- `--enable-debug`:
     Enable asserts and internal sanity checks; implies a performance penalty
-  * default: *no*
+  - default: *no*
 
 #### Performance Co-Pilot
 
-* `--enable-pcp`:
+- `--enable-pcp`:
     enable Performance Co-Pilot support via a new pcp-htop utility
-  * dependency: *libpcp*
-  * default: *no*
+  - dependency: *libpcp*
+  - default: *no*
 
 #### Linux
 
-* `--enable-sensors`:
+- `--enable-sensors`:
     enable libsensors(3) support for reading temperature data
-  * dependencies: *libsensors-dev*(build-time), at runtime *libsensors* is loaded via `dlopen(3)` if available
-  * default: *check*
-* `--enable-capabilities`:
+  - dependencies: *libsensors-dev*(build-time), at runtime *libsensors* is loaded via `dlopen(3)` if available
+  - default: *check*
+- `--enable-capabilities`:
     enable Linux capabilities support
-  * dependency: *libcap*
-  * default: *check*
-* `--with-proc`:
+  - dependency: *libcap*
+  - default: *check*
+- `--with-proc`:
     location of a Linux-compatible proc filesystem
-  * default: */proc*
-* `--enable-openvz`:
+  - default: */proc*
+- `--enable-openvz`:
     enable OpenVZ support
-  * default: *no*
-* `--enable-vserver`:
+  - default: *no*
+- `--enable-vserver`:
     enable VServer support
-  * default: *no*
-* `--enable-ancient-vserver`:
+  - default: *no*
+- `--enable-ancient-vserver`:
     enable ancient VServer support (implies `--enable-vserver`)
-  * default: *no*
-* `--enable-delayacct`:
+  - default: *no*
+- `--enable-delayacct`:
     enable Linux delay accounting support
-  * dependencies: *pkg-config*(build-time), *libnl-3* and *libnl-genl-3*
-  * default: *check*
+  - dependencies: *pkg-config*(build-time), *libnl-3* and *libnl-genl-3*
+  - default: *check*
 
 ## Runtime dependencies
 
 `htop` has a set of fixed minimum runtime dependencies, which is kept as minimal as possible:
 
-* `ncurses` libraries for terminal handling (wide character support).
+- `ncurses` libraries for terminal handling (wide character support).
 
 ### Runtime optional dependencies
 
@@ -176,10 +177,10 @@ To install on the local system run `make install`. By default `make install` ins
 
 #### Linux
 
-* `libdl`, if not building a static binary, is always required when support for optional dependencies (i.e. `libsensors`, `libsystemd`) is present.
-* `libcap`, user-space interfaces to POSIX 1003.1e capabilities, is always required when `--enable-capabilities` was used to configure `htop`.
-* `libsensors`, readout of temperatures and CPU speeds, is optional even when `--enable-sensors` was used to configure `htop`.
-* `libsystemd` is optional when `--enable-static` was not used to configure `htop`. If building statically and `libsystemd` is not found by `configure`, support for the systemd meter is disabled entirely.
+- `libdl`, if not building a static binary, is always required when support for optional dependencies (i.e. `libsensors`, `libsystemd`) is present.
+- `libcap`, user-space interfaces to POSIX 1003.1e capabilities, is always required when `--enable-capabilities` was used to configure `htop`.
+- `libsensors`, readout of temperatures and CPU speeds, is optional even when `--enable-sensors` was used to configure `htop`.
+- `libsystemd` is optional when `--enable-static` was not used to configure `htop`. If building statically and `libsystemd` is not found by `configure`, support for the systemd meter is disabled entirely.
 
 `htop` checks for the availability of the actual runtime libraries as `htop` runs.
 

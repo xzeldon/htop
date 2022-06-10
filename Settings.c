@@ -665,80 +665,12 @@ static bool Settings_read(Settings *this, const char *fileName, unsigned int ini
    }
    fclose(fd);
 
-   if (didReadMeters)
-   {
-      if (didReadMeters)
-      {
-#if defined FORCE_TEMP_METER || defined FORCE_FREQ_METER
-         int ftidx = this->hColumns[1].len;
-         size_t realloc_len = ftidx;
-#ifdef FORCE_TEMP_METER
-         uint8_t t_det = 0;
-#endif
-#ifdef FORCE_FREQ_METER
-         uint8_t f_det = 0;
-#endif
-         char **cnames = this->hColumns[1].names;
-         for (int i = 0; i < ftidx; ++i)
-         {
-#ifdef FORCE_TEMP_METER
-            if (strcmp("Temp", cnames[i]) == 0)
-            {
-               t_det = 1;
-               break;
-            }
-#endif
-#ifdef FORCE_FREQ_METER
-            if (strcmp("Freq", cnames[i]) == 0)
-            {
-               f_det = 1;
-               break;
-            }
-#endif
-         }
-#ifdef FORCE_TEMP_METER
-         if (!t_det)
-         {
-            ++realloc_len;
-         }
-#endif
-#ifdef FORCE_FREQ_METER
-         if (!f_det)
-         {
-            ++realloc_len;
-         }
-#endif
-         this->hColumns[1].names = xReallocArray(this->hColumns[1].names, realloc_len + 1, sizeof(char *));
-         this->hColumns[1].modes = xReallocArray(this->hColumns[1].modes, realloc_len, sizeof(int));
+   if (!didReadMeters || !Settings_validateMeters(this))
+      Settings_defaultMeters(this, initialCpuCount);
+   if (!this->nScreens)
+      Settings_defaultScreens(this);
 
-#ifdef FORCE_TEMP_METER
-         if (!t_det)
-         {
-            this->hColumns[1].names[ftidx] = xStrdup("Temp");
-            this->hColumns[1].modes[ftidx++] = TEXT_METERMODE;
-         }
-#endif
-#ifdef FORCE_FREQ_METER
-         if (!f_det)
-         {
-            this->hColumns[1].names[ftidx] = xStrdup("Freq");
-            this->hColumns[1].modes[ftidx++] = TEXT_METERMODE;
-         }
-#endif
-
-         this->hColumns[1].len = ftidx;
-#endif
-      }
-      else
-      {
-         Settings_defaultMeters(this, initialCpuCount);
-      }
-
-      if (!this->nScreens)
-         Settings_defaultScreens(this);
-
-      return didReadAny;
-   }
+   return didReadAny;
 }
 
 static void writeFields(FILE *fd, const ProcessField *fields, Hashtable *columns, bool byName, char separator)
